@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luca Spier — Videographer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #0a0a0a; color: #e8e4dc; font-family: 'Barlow', sans-serif; font-weight: 300; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-name { font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.02em; color: #e8e4dc; text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(232,228,220,0.4); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #e8e4dc; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 80px 48px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 70% 40%, rgba(180,140,80,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 50% at 20% 70%, rgba(100,120,160,0.06) 0%, transparent 60%);
+  }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-bottom: 24px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 8vw, 96px); line-height: 1.05; font-weight: 700; color: #e8e4dc; max-width: 800px; margin-bottom: 32px; }
+  .hero-title em { font-style: italic; color: rgba(210,185,120,0.85); }
+  .hero-sub { font-size: 16px; color: rgba(232,228,220,0.45); max-width: 500px; line-height: 1.75; margin-bottom: 44px; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(210,185,120,0.85); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-cta:hover { color: #d2b978; }
+  .hero-cta-line { width: 44px; height: 1px; background: currentColor; transition: width 0.3s; }
+  .hero-cta:hover .hero-cta-line { width: 70px; }
+
+  /* SECTIONS */
+  .section { padding: 100px 48px; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding-bottom: 20px;
+  }
+  .section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,228,220,0.25); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 34px; color: #e8e4dc; font-weight: 400; }
+
+  /* FILTER */
+  .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 44px; }
+  .tab-btn {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 8px 18px; border: 1px solid rgba(255,255,255,0.1);
+    background: transparent; color: rgba(232,228,220,0.4);
+    cursor: pointer; transition: all 0.2s; font-family: 'Barlow', sans-serif;
+  }
+  .tab-btn:hover { border-color: rgba(255,255,255,0.3); color: #e8e4dc; }
+  .tab-btn.active { background: rgba(210,185,120,0.1); border-color: rgba(210,185,120,0.45); color: #d2b978; }
+
+  /* PROJECT GRID */
+  .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .project-card { aspect-ratio: 16/9; position: relative; overflow: hidden; cursor: pointer; background: #111; display: block; }
+  .project-card.wide { grid-column: span 2; }
+  .project-card.hidden { display: none; }
+  .card-thumb {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+  .card-thumb-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px;
+    transition: transform 0.6s ease;
+  }
+  .project-card:hover .card-thumb,
+  .project-card:hover .card-thumb-placeholder { transform: scale(1.05); }
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 24px;
+  }
+  .project-card:hover .card-overlay { opacity: 1; }
+  .card-tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(210,185,120,0.85); margin-bottom: 7px; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 20px; color: #e8e4dc; line-height: 1.2; margin-bottom: 5px; }
+  .card-meta { font-size: 12px; color: rgba(232,228,220,0.45); }
+  .play-btn {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border: 1.5px solid rgba(255,255,255,0.5); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    background: rgba(0,0,0,0.35);
+  }
+  .play-btn svg { width: 16px; height: 16px; fill: white; margin-left: 4px; }
+  .project-card:hover .play-btn { opacity: 1; }
+
+  /* VIDEO MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.92);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-inner { position: relative; width: 90vw; max-width: 1100px; }
+  .modal-close {
+    position: absolute; top: -44px; right: 0;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(232,228,220,0.4); background: none; border: none;
+    cursor: pointer; font-family: 'Barlow', sans-serif;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: #e8e4dc; }
+  .modal-video { position: relative; padding-top: 56.25%; }
+  .modal-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .modal-info { padding: 20px 0 0; display: flex; gap: 16px; align-items: baseline; }
+  .modal-tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(210,185,120,0.75); }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #e8e4dc; }
+  .modal-client { font-size: 13px; color: rgba(232,228,220,0.4); margin-left: auto; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.7fr; gap: 72px; align-items: start; }
+  .about-portrait {
+    aspect-ratio: 3/4; background: #111;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px; position: relative;
+  }
+  .about-portrait::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(210,185,120,0.12); }
+  .about-text h2 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 400; color: #e8e4dc; margin-bottom: 28px; line-height: 1.2; }
+  .about-text h2 em { font-style: italic; color: rgba(210,185,120,0.85); }
+  .about-text p { font-size: 15px; color: rgba(232,228,220,0.5); line-height: 1.85; margin-bottom: 20px; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+  .skill-item { border-left: 2px solid rgba(210,185,120,0.25); padding-left: 14px; }
+  .skill-name { font-size: 13px; font-weight: 500; color: #e8e4dc; margin-bottom: 4px; }
+  .skill-desc { font-size: 11px; color: rgba(232,228,220,0.3); letter-spacing: 0.04em; }
+
+  /* CONTACT */
+  .contact-wrap { max-width: 620px; }
+  .contact-intro { font-size: 16px; color: rgba(232,228,220,0.45); line-height: 1.85; margin-bottom: 52px; }
+  .contact-email { font-family: 'Playfair Display', serif; font-size: 30px; color: rgba(210,185,120,0.7); margin-bottom: 52px; font-style: italic; }
+  .social-links { display: flex; flex-direction: column; gap: 0; }
+  .social-link {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(232,228,220,0.4); text-decoration: none;
+    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: #d2b978; }
+  .social-icon { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; font-style: normal; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 11px; color: rgba(232,228,220,0.2); letter-spacing: 0.06em; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .hero, .section { padding-left: 24px; padding-right: 24px; }
+    .project-grid { grid-template-columns: 1fr; }
+    .project-card.wide { grid-column: span 1; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-portrait { aspect-ratio: 4/3; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-name">Luca Spier</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#about">Über mich</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Videographer & Director of Photography</div>
+  <h1 class="hero-title">Visuals, die <em>bleiben.</em></h1>
+  <p class="hero-sub">Vom Musikvideo bis zum Werbefilm — ich erzähle Geschichten mit Bild und Bewegung.</p>
+  <a href="#portfolio" class="hero-cta">
+    <span class="hero-cta-line"></span>
+    Projekte ansehen
+  </a>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="section" id="portfolio">
+  <div class="section-header">
+    <span class="section-label">02</span>
+    <h2 class="section-title">Projekte</h2>
+  </div>
+  <div class="filter-tabs">
+    <button class="tab-btn active" onclick="filterProjects('all', this)">Alle</button>
+    <button class="tab-btn" onclick="filterProjects('commercial', this)">Kommerziell</button>
+    <button class="tab-btn" onclick="filterProjects('music', this)">Musikvideo</button>
+    <button class="tab-btn" onclick="filterProjects('cinematic', this)">Cinematic</button>
+    <button class="tab-btn" onclick="filterProjects('social', this)">Social / Ads</button>
+  </div>
+  <div class="project-grid" id="project-grid"></div>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <div class="section-header">
+    <span class="section-label">03</span>
+    <h2 class="section-title">Über mich</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-portrait">🎬</div>
+    <div class="about-text">
+      <h2>Ich filme<br><em>was zählt.</em></h2>
+      <p>Ich bin Luca Spier — Videograph mit Leidenschaft für cineastisches Storytelling. Ob Musikvideo, Reisedoku, HR-Testimonial oder Social Ad: Jedes Projekt bekommt seinen eigenen visuellen Charakter.</p>
+      <p>Mein Ansatz: Keine Templates, keine Kompromisse. Ich arbeite nah an Menschen und Marken, um Bilder zu schaffen, die hängen bleiben.</p>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-name">Kamera & Licht</div>
+          <div class="skill-desc">Sony FX3, BMPCC 6K, DJI Ronin</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Schnitt & Color</div>
+          <div class="skill-desc">Premiere Pro, DaVinci Resolve</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Drohne</div>
+          <div class="skill-desc">DJI Air 3, EU-Lizenz</div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name">Motion Design</div>
+          <div class="skill-desc">After Effects, Grundkenntnisse</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="section-header">
+    <span class="section-label">04</span>
+    <h2 class="section-title">Kontakt</h2>
+  </div>
+  <div class="contact-wrap">
+    <p class="contact-intro">Projekt in Planung? Kollaboration? Oder einfach mal vorstellen — ich freue mich von euch zu hören.</p>
+    <div class="contact-email">hallo@lucaspier.de</div>
+    <div class="social-links">
+      <a class="social-link" href="https://youtube.com/@lucaspier" target="_blank">
+        <span class="social-icon">▶</span>
+        YouTube
+      </a>
+      <a class="social-link" href="https://instagram.com/lucaspier" target="_blank">
+        <span class="social-icon">◈</span>
+        Instagram
+      </a>
+      <a class="social-link" href="https://linkedin.com/in/lucaspier" target="_blank">
+        <span class="social-icon">in</span>
+        LinkedIn
+      </a>
+      <a class="social-link" href="https://vimeo.com/lucaspier" target="_blank">
+        <span class="social-icon">▪</span>
+        Vimeo
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Luca Spier</p>
+  <p>Videographer & Director of Photography</p>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal()">✕ Schließen</button>
+    <div class="modal-video">
+      <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <div class="modal-info">
+      <span class="modal-tag" id="modal-tag"></span>
+      <span class="modal-title" id="modal-title"></span>
+      <span class="modal-client" id="modal-client"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROJECTS = [
+  {
+    id: 1,
+    title: 'New York — One Week',
+    client: 'Cinematic Travel Vlog',
+    tag: 'Cinematic',
+    cat: 'cinematic',
+    youtube: 'QRbUp317eOM',
+    wide: true
+  },
+  // Weitere Projekte hier einfügen:
+  // { id:2, title:'...', client:'...', tag:'Musikvideo', cat:'music', youtube:'VIDEO_ID', wide:false },
+  // { id:3, title:'...', client:'...', tag:'Kommerziell', cat:'commercial', youtube:'VIDEO_ID', wide:false },
+  // { id:4, title:'...', client:'...', tag:'Social / Ads', cat:'social', youtube:'VIDEO_ID', wide:false },
+];
+
+function getThumb(youtubeId) {
+  return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+}
+
+function renderProjects(filter) {
+  const grid = document.getElementById('project-grid');
+  const filtered = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === filter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="project-card${p.wide ? ' wide' : ''}" onclick="openModal('${p.youtube}','${p.tag}','${p.title}','${p.client}')">
+      <img class="card-thumb" src="${getThumb(p.youtube)}" alt="${p.title}" loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="card-thumb-placeholder" style="display:none; background: #141414;">🎬</div>
+      <div class="card-overlay">
+        <div class="card-tag">${p.tag}</div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-meta">${p.client}</div>
+      </div>
+      <div class="play-btn">
+        <svg viewBox="0 0 16 16"><polygon points="3,2 14,8 3,14"/></svg>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProjects(cat);
+}
+
+function openModal(youtubeId, tag, title, client) {
+  document.getElementById('modal-iframe').src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+  document.getElementById('modal-tag').textContent = tag;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-client').textContent = client;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-iframe').src = '';
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderProjects('all');
+</script>
+</body>
+</html>
