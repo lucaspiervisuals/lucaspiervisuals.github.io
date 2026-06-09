@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Luca Spier — Videographer</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -185,14 +185,26 @@
   footer p { font-size: 11px; color: rgba(232,228,220,0.2); letter-spacing: 0.06em; }
 
   @media (max-width: 768px) {
-    nav { padding: 0 24px; }
-    .hero, .section { padding-left: 24px; padding-right: 24px; }
+    nav { padding: 0; }
+    .nav-inner { padding: 0 20px; }
+    .nav-name { font-size: 15px; white-space: nowrap; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.08em; }
+    .hero { padding-left: 20px; padding-right: 20px; padding-bottom: 48px; }
+    .hero-title { font-size: clamp(36px, 10vw, 56px); }
+    .section { padding-left: 20px; padding-right: 20px; padding-top: 64px; padding-bottom: 64px; }
     .project-grid { grid-template-columns: 1fr; }
     .project-card.wide { grid-column: span 1; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
     .about-portrait { aspect-ratio: 4/3; }
+    .about-text h2 { font-size: 28px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-email { font-size: 18px; word-break: break-all; }
     footer { flex-direction: column; gap: 8px; text-align: center; }
+    .section-inner { max-width: 100%; }
   }
+  * { box-sizing: border-box; }
+  body { overflow-x: hidden; }
 </style>
 </head>
 <body>
@@ -362,11 +374,11 @@ const PROJECTS = [
   {
     id: 5,
     title: 'Wohlfühlfigur Podcast',
-    client: 'Podcast · Visual Production',
-    tag: 'Commercial',
-    cat: 'commercial',
+    client: 'Podcast · Social Content',
+    tag: 'Social / Ads',
+    cat: 'social',
     role: 'Setup, Camera',
-    youtube: 'wb8X1Fp0hkE'
+    youtube: 'cgyfyOeR4BQ'
   },
   {
     id: 6,
@@ -376,6 +388,24 @@ const PROJECTS = [
     cat: 'cinematic',
     role: 'Concept, Camera, Editing',
     youtube: 'pdpDEBx3uVM'
+  },
+  {
+    id: 7,
+    title: 'SKY — Wach',
+    client: 'Music Video · SKY',
+    tag: 'Music Video',
+    cat: 'music',
+    role: 'Concept, Editing',
+    youtube: 'efZw-UMaQwk'
+  },
+  {
+    id: 8,
+    title: 'INANC — Kappe tief',
+    client: 'Music Video · INANC',
+    tag: 'Music Video',
+    cat: 'music',
+    role: 'Assistant Camera, BTS Pictures',
+    youtube: 'oIWCapJEMz8'
   },
 ];
 
