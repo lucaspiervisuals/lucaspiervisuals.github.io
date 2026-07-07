@@ -43,6 +43,14 @@
       radial-gradient(ellipse 70% 60% at 70% 40%, rgba(180,140,80,0.07) 0%, transparent 65%),
       radial-gradient(ellipse 40% 50% at 20% 70%, rgba(100,120,160,0.06) 0%, transparent 60%);
   }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent 0%, #0a0a0a 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
   .hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,228,220,0.35); margin-bottom: 24px; }
   .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 8vw, 96px); line-height: 1.05; font-weight: 700; color: #e8e4dc; max-width: 800px; margin-bottom: 32px; }
   .hero-title em { font-style: italic; color: rgba(210,185,120,0.85); }
@@ -59,6 +67,7 @@
 
   /* SECTIONS */
   .section { padding: 100px 48px; }
+  #portfolio { padding-top: 40px; }
   .section-inner { max-width: 1400px; margin: 0 auto; }
   .section-header {
     display: flex; align-items: baseline; gap: 20px;
