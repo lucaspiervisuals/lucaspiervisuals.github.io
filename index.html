@@ -231,46 +231,9 @@
   }
   .modal-yt-btn:hover { background: rgba(210,185,120,0.2); }
 
-  /* CURSOR */
-  * { cursor: none !important; }
-  .custom-cursor {
-    position: fixed; top: 0; left: 0; z-index: 99999;
-    pointer-events: none;
-    mix-blend-mode: difference;
-  }
-  .cursor-dot {
-    position: absolute;
-    width: 8px; height: 8px;
-    background: #e8e4dc;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, opacity 0.2s;
-  }
-  .cursor-ring {
-    position: absolute;
-    width: 36px; height: 36px;
-    border: 1px solid rgba(232,228,220,0.6);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s;
-  }
-  .cursor-hover .cursor-dot { width: 4px; height: 4px; }
-  .cursor-hover .cursor-ring { width: 56px; height: 56px; border-color: #d2b978; }
+  
 
-  /* SCROLL FADE IN */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
+  
 
   /* HERO TEXT REVEAL */
   .hero-word {
@@ -296,6 +259,24 @@
   }
   @keyframes fadeIn {
     to { opacity: 1; }
+  }
+
+
+  /* CURSOR */
+  * { cursor: none !important; }
+  #cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: rgba(232,228,220,0.9);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, opacity 0.15s ease;
+  }
+  #cursor.hover {
+    width: 6px; height: 6px;
+    opacity: 0.5;
   }
 
 </style>
@@ -498,9 +479,11 @@ const PROJECTS = [
   },
 ];
 
+
 function getThumb(youtubeId) {
   return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
 }
+
 
 function renderProjects(filter) {
   const grid = document.getElementById('project-grid');
@@ -514,7 +497,7 @@ function renderProjects(filter) {
         <div class="card-tag">${p.tag}</div>
         <div class="card-title">${p.title}</div>
         <div class="card-meta">${p.client}</div>
-        ${p.role ? `<div class="card-role">Role: ${p.role}</div>` : ''}
+        ${p.role ? '<div class="card-role">Role: ' + p.role + '</div>' : ''}
       </div>
       <div class="play-btn">
         <svg viewBox="0 0 16 16"><polygon points="3,2 14,8 3,14"/></svg>
@@ -523,115 +506,20 @@ function renderProjects(filter) {
   `).join('');
 }
 
+
 function filterProjects(cat, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderProjects(cat);
 }
 
-function openModal(youtubeId, tag, title, client) {
-  document.getElementById('modal-iframe').src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
-  document.getElementById('modal-tag').textContent = tag;
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-client').textContent = client;
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
 
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
-  document.getElementById('modal-iframe').src = '';
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
 
 renderProjects('all');
 
-// ── CUSTOM CURSOR ──────────────────────────────
-const cursorEl  = document.getElementById('cursor');
-const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-let mx = -200, my = -200, rx = -200, ry = -200;
-let cursorVisible = false;
 
-window.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  if (!cursorVisible) { rx = mx; ry = my; cursorVisible = true; cursorEl.style.opacity = '1'; }
-});
-window.addEventListener('mouseleave', () => { cursorEl.style.opacity = '0'; });
-window.addEventListener('mouseenter', () => { cursorEl.style.opacity = '1'; });
-
-// Ring follows with lag
-function animateCursor() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  cursorDot.style.left  = mx + 'px';
-  cursorDot.style.top   = my + 'px';
-  cursorRing.style.left = rx + 'px';
-  cursorRing.style.top  = ry + 'py';
-  cursorRing.style.top  = ry + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-// Hover state on interactive elements
-document.querySelectorAll('a, button, .project-card, .tab-btn').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorEl.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => cursorEl.classList.remove('cursor-hover'));
-});
-
-// ── HERO WORD SPLIT ────────────────────────────
-const titleEl = document.getElementById('hero-title');
-if (titleEl) {
-  const words = ['Visuals', 'that'];
-  const delays = [0.4, 0.6, 0.8];
-  titleEl.innerHTML = words.map((w, i) =>
-    `<span class="hero-word" style="animation-delay:${delays[i]}s">${w}</span> `
-  ).join('') + `<em class="hero-word" style="animation-delay:0.9s">last.</em>`;
-}
-
-// ── SCROLL REVEAL ──────────────────────────────
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
-
-revealEls.forEach(el => revealObserver.observe(el));
-
-// Also reveal project cards as they're rendered
-const gridObserver = new MutationObserver(() => {
-  document.querySelectorAll('.project-card:not(.reveal)').forEach((card, i) => {
-    card.classList.add('reveal');
-    card.style.transitionDelay = (i * 0.08) + 's';
-    revealObserver.observe(card);
-  });
-});
-const grid = document.getElementById('project-grid');
-if (grid) gridObserver.observe(grid, { childList: true });
-
-// Fallback: force all reveals visible after 1s
-setTimeout(() => {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-}, 1000);
-
-// Also re-check on scroll end
-let scrollTimer;
-window.addEventListener('scroll', () => {
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(() => {
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight) el.classList.add('visible');
-    });
-  }, 100);
-});
 
 </script>
 
@@ -657,7 +545,7 @@ window.addEventListener('scroll', () => {
 </div>
 
 <!-- SPLASH CURSOR -->
-<canvas id="fluid" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;mix-blend-mode:screen;opacity:0.7;"></canvas>
+<canvas id="fluid" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:100;mix-blend-mode:screen;opacity:0.7;"></canvas>
 <script>
 (function() {
   const canvas = document.getElementById('fluid');
@@ -1019,10 +907,22 @@ void main(){
 </script>
 
 
-<div class="custom-cursor" id="cursor" style="opacity:0;">
-  <div class="cursor-dot" id="cursor-dot"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
-</div>
 
+
+<div id="cursor"></div>
+
+<script>
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+  cur.style.opacity = '1';
+});
+document.addEventListener('mouseleave', () => cur.style.opacity = '0');
+document.querySelectorAll('a, button, .project-card, .tab-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+});
+</script>
 </body>
 </html>
