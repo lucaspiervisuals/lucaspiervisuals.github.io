@@ -164,7 +164,26 @@ section{position:relative}
 .work-grid-sm .work-card:nth-child(2){transition-delay:.1s}
 .work-card{
   position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;
-  border:1px solid var(--line-soft);background:#151513;
+  border-radius:20px;background:#141412;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.20),
+    inset 0 0 0 1px rgba(255,255,255,0.04),
+    inset 0 -24px 46px rgba(0,0,0,0.28),
+    0 26px 54px -16px rgba(0,0,0,0.62);
+  transition:transform .5s cubic-bezier(.22,.61,.36,1),box-shadow .5s ease;
+}
+.work-card::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,0.14),rgba(255,255,255,0) 42%);opacity:.75;
+}
+.work-card:hover{
+  transform:translateY(-5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    inset 0 0 0 1px rgba(255,255,255,0.07),
+    inset 0 -24px 46px rgba(0,0,0,0.28),
+    0 40px 80px -18px rgba(0,0,0,0.72);
 }
 .work-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:brightness(.8)}
 .work-card:hover img{transform:scale(1.05)}
@@ -245,7 +264,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 .modal-video iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 .modal-info{padding:16px 2px 0;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
 .modal-info .mtag{font-family:var(--font-head);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold)}
-.modal-info .mtitle{font-family:var(--font-head);font-size:18px;font-weight:500;color:var(--fg)}
+.modal-info .mtitle{font-family:var(--font-head);font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg)}
 .modal-info .mclient{font-size:13px;color:var(--muted-2);margin-left:auto}
 
 /* ---------- RESPONSIVE ---------- */
@@ -285,6 +304,14 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 .serv-grid .serv-item:nth-child(2){transition-delay:.12s}
 .serv-grid .serv-item:nth-child(3){transition-delay:.24s}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1 !important;transform:none !important;transition:none}}
+/* custom cursor */
+@media (hover:hover) and (pointer:fine){
+  html.has-cursor, html.has-cursor *{cursor:none}
+  .cursor-dot,.cursor-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:99999;border-radius:50%;opacity:0;transition:opacity .3s}
+  .cursor-dot{width:7px;height:7px;background:var(--gold);box-shadow:0 0 12px rgba(201,168,106,0.6)}
+  .cursor-ring{width:34px;height:34px;border:1px solid rgba(244,242,236,0.55);transition:width .25s ease,height .25s ease,border-color .25s ease,background-color .25s ease,opacity .3s}
+  .cursor-ring.hover{width:64px;height:64px;border-color:var(--gold);background-color:rgba(201,168,106,0.09)}
+}
 </style>
 </head>
 <body>
@@ -505,11 +532,6 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 <footer>
   <div class="footer-inner">
     <div class="footer-left">© 2026 LucaSpierVisuals</div>
-    <div class="footer-links">
-      <a href="#">Imprint</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
     <div class="footer-social">
       <a href="https://www.instagram.com/luca.spier/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 100 9.8 4.9 4.9 0 000-9.8zm0 8.1a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg></a>
       <a href="https://www.youtube.com/@travelwithluca18" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5c-.2-1-.9-1.8-1.9-2C19.3 5 12 5 12 5s-7.3 0-9.1.5C1.9 5.7 1.2 6.5 1 7.5.5 9.3.5 12 .5 12s0 2.7.5 4.5c.2 1 .9 1.8 1.9 2C4.7 19 12 19 12 19s7.3 0 9.1-.5c1-.2 1.7-1 1.9-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.7 15.3V8.7l6 3.3-6 3.3z"/></svg></a>
@@ -676,6 +698,29 @@ void main(){
     ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
   },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   els.forEach(e=>io.observe(e));
+})();
+</script>
+<script>
+(function(){
+  if(!window.matchMedia || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const dot=document.createElement('div'); dot.className='cursor-dot';
+  const ring=document.createElement('div'); ring.className='cursor-ring';
+  document.body.appendChild(dot); document.body.appendChild(ring);
+  document.documentElement.classList.add('has-cursor');
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,shown=false;
+  addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+    if(!shown){shown=true;dot.style.opacity=1;ring.style.opacity=1;}
+  },{passive:true});
+  (function loop(){ rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18;
+    ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop); })();
+  const sel='a,button,.work-card,.hero-play,.nav-toggle,.about-btn,.cta-btn,.btn-talk,.hero-social a,.footer-social a';
+  document.addEventListener('mouseover',e=>{ if(e.target.closest && e.target.closest(sel)) ring.classList.add('hover'); });
+  document.addEventListener('mouseout',e=>{ if(e.target.closest && e.target.closest(sel)) ring.classList.remove('hover'); });
+  document.addEventListener('mouseleave',()=>{ dot.style.opacity=0; ring.style.opacity=0; });
+  document.addEventListener('mouseenter',()=>{ dot.style.opacity=1; ring.style.opacity=1; });
 })();
 </script>
 </body>
