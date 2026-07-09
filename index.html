@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('anim','imgfx');</script>
 <title>LucaSpierVisuals — Videographer & Storyteller</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,11 +65,14 @@ nav.scrolled{
 .logo span{color:var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{
+  position:relative;
   font-family:var(--font-head);
   font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--muted);transition:color .2s;
 }
 .nav-links a:hover{color:var(--fg)}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.22,.61,.36,1)}
+.nav-links a:hover::after{transform:scaleX(1)}
 .btn-talk{
   font-family:var(--font-head);
   font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
@@ -102,6 +106,7 @@ nav.scrolled{
 }
 .hero-inner{max-width:560px}
 .hero-inner .eyebrow{display:block;margin-bottom:26px}
+.hero-title,.sec-title,.cta h2,.about-text h2{text-wrap:balance}
 .hero-title{
   font-family:var(--font-display);
   font-size:clamp(52px,7vw,104px);
@@ -185,17 +190,23 @@ section{position:relative}
     inset 0 -24px 46px rgba(0,0,0,0.28),
     0 40px 80px -18px rgba(0,0,0,0.72);
 }
-.work-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:brightness(.8)}
+.work-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .8s ease,filter .8s ease;filter:brightness(.8)}
+.imgfx .work-card img{opacity:0;filter:brightness(.8) blur(14px)}
+.imgfx .work-card img.loaded{opacity:1;filter:brightness(.8) blur(0)}
 .work-card:hover img{transform:scale(1.05)}
 .work-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,8,.92) 0%,rgba(8,8,8,.15) 45%,transparent 70%)}
 .work-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:28px;display:flex;flex-direction:column}
-.work-tag{font-family:var(--font-head);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.work-tag{display:inline-flex;align-items:baseline;gap:9px;font-family:var(--font-head);font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+#work .container{counter-reset:proj}
+#work .work-card{counter-increment:proj}
+.work-tag::before{content:counter(proj,decimal-leading-zero);color:rgba(244,242,236,0.4);font-variant-numeric:tabular-nums;letter-spacing:0.1em}
 .work-title{font-family:var(--font-display);font-size:26px;text-transform:uppercase;letter-spacing:0.02em;line-height:1;margin-bottom:8px}
 .work-meta{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .work-meta small{font-size:12px;color:var(--muted);font-weight:300}
 .work-arrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .25s,border-color .25s}
 .work-card:hover .work-arrow{background:var(--fg);border-color:var(--fg)}
-.work-arrow svg{width:14px;height:14px;stroke:var(--fg);transition:stroke .25s}
+.work-arrow svg{width:14px;height:14px;stroke:var(--fg);transition:stroke .25s,transform .25s}
+.work-card:hover .work-arrow svg{transform:translateX(2px)}
 .work-card:hover .work-arrow svg{stroke:#0a0a0a}
 
 /* ---------- SERVICES ---------- */
@@ -241,6 +252,10 @@ section{position:relative}
   padding:18px 40px;background:var(--fg);color:#0a0a0a;border-radius:2px;transition:background .2s;
 }
 .cta-btn:hover{background:var(--gold)}
+.cta-btn::after{content:"\2192";margin-left:10px;display:inline-block;transition:transform .3s ease}
+.cta-btn:hover::after{transform:translateX(5px)}
+.cta-btn:active{transform:translateY(1px)}
+.btn-talk:active{transform:translateY(1px)}
 
 /* ---------- FOOTER ---------- */
 footer{border-top:1px solid var(--line-soft);background:var(--bg)}
@@ -312,6 +327,12 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
   .cursor-ring{width:34px;height:34px;border:1px solid rgba(244,242,236,0.55);transition:width .25s ease,height .25s ease,border-color .25s ease,background-color .25s ease,opacity .3s}
   .cursor-ring.hover{width:64px;height:64px;border-color:var(--gold);background-color:rgba(201,168,106,0.09)}
 }
+/* hero intro */
+html.anim .hero-inner .eyebrow, html.anim .hero-title, html.anim .hero-sub{opacity:0;transform:translateY(26px);transition:opacity .95s cubic-bezier(.22,.61,.36,1),transform .95s cubic-bezier(.22,.61,.36,1)}
+html.anim.loaded .hero-inner .eyebrow{opacity:1;transform:none;transition-delay:.15s}
+html.anim.loaded .hero-title{opacity:1;transform:none;transition-delay:.30s}
+html.anim.loaded .hero-sub{opacity:1;transform:none;transition-delay:.50s}
+@media (prefers-reduced-motion:reduce){html.anim .hero-inner .eyebrow,html.anim .hero-title,html.anim .hero-sub{opacity:1 !important;transform:none !important;transition:none}}
 </style>
 </head>
 <body>
@@ -698,6 +719,19 @@ void main(){
   document.addEventListener('mouseout',e=>{ if(e.target.closest && e.target.closest(sel)) ring.classList.remove('hover'); });
   document.addEventListener('mouseleave',()=>{ dot.style.opacity=0; ring.style.opacity=0; });
   document.addEventListener('mouseenter',()=>{ dot.style.opacity=1; ring.style.opacity=1; });
+})();
+</script>
+<script>
+(function(){
+  function reveal(){ document.documentElement.classList.add('loaded'); }
+  if(document.readyState==='complete') reveal();
+  else window.addEventListener('load',reveal);
+  setTimeout(reveal,1600);
+  document.querySelectorAll('.work-card img').forEach(function(img){
+    function mark(){ img.classList.add('loaded'); }
+    if(img.complete && img.naturalWidth>0) mark();
+    else { img.addEventListener('load',mark); img.addEventListener('error',mark); }
+  });
 })();
 </script>
 </body>
