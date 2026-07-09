@@ -229,8 +229,8 @@ section{position:relative}
 /* ---------- CTA ---------- */
 .cta{position:relative;overflow:hidden;border-top:1px solid var(--line-soft)}
 .cta-bg{position:absolute;inset:0;z-index:0}
-.cta-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.28) grayscale(.2)}
-.cta-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.85),rgba(10,10,10,.55))}
+.cta-bg canvas{width:100%;height:100%;display:block;opacity:.55}
+.cta-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.82),rgba(10,10,10,.5))}
 .cta-inner{position:relative;z-index:2;padding:120px 0}
 .cta-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center}
 .cta .eyebrow{display:block;margin-bottom:22px}
@@ -307,7 +307,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 /* custom cursor */
 @media (hover:hover) and (pointer:fine){
   html.has-cursor, html.has-cursor *{cursor:none}
-  .cursor-dot,.cursor-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:99999;border-radius:50%;opacity:0;transition:opacity .3s}
+  .cursor-dot,.cursor-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:99999;border-radius:50%;opacity:0;will-change:transform;transition:opacity .3s}
   .cursor-dot{width:7px;height:7px;background:var(--gold);box-shadow:0 0 12px rgba(201,168,106,0.6)}
   .cursor-ring{width:34px;height:34px;border:1px solid rgba(244,242,236,0.55);transition:width .25s ease,height .25s ease,border-color .25s ease,background-color .25s ease,opacity .3s}
   .cursor-ring.hover{width:64px;height:64px;border-color:var(--gold);background-color:rgba(201,168,106,0.09)}
@@ -324,8 +324,8 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
     <a href="#top" class="logo">LSV<span>.</span></a>
     <ul class="nav-links">
       <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="btn-talk">Let's Talk</a>
@@ -338,7 +338,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 <!-- HERO -->
 <header class="hero" id="top">
   <div class="hero-media">
-    <canvas id="silk"></canvas>
+    <canvas id="silk" class="silk-fx" data-color="#7B7481" data-speed="5" data-scale="1" data-noise="1.5"></canvas>
   </div>
   <div class="hero-content">
     <div class="hero-inner">
@@ -509,8 +509,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 <!-- CTA -->
 <section class="cta" id="contact">
   <div class="cta-bg">
-    <img src="https://img.youtube.com/vi/pdpDEBx3uVM/maxresdefault.jpg" alt=""
-      onerror="this.onerror=null;this.src='https://img.youtube.com/vi/pdpDEBx3uVM/hqdefault.jpg'">
+<canvas id="silk-cta" class="silk-fx" data-color="#2b2b33" data-speed="2.4" data-scale="1.5" data-noise="0.7"></canvas>
   </div>
   <div class="cta-inner">
     <div class="container">
@@ -584,17 +583,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 </script>
 
 <script>
-/* Silk (React Bits) ported to vanilla WebGL — same shader, no dependencies */
+/* Silk (React Bits) ported to vanilla WebGL — supports multiple canvases via .silk-fx + data-* */
 (function(){
-  const canvas=document.getElementById('silk');
-  if(!canvas) return;
-  const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
-  if(!gl){ canvas.style.background='#15140f'; return; }
-
-  // props (from usage example)
-  const props={ speed:5, scale:1, color:'#7B7481', noiseIntensity:1.5, rotation:0 };
   const hexRGB=h=>{h=h.replace('#','');return [parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255];};
-
   const vert=`
 attribute vec2 aPosition;
 varying vec2 vUv;
@@ -602,7 +593,6 @@ void main(){
   vUv = aPosition * 0.5 + 0.5;
   gl_Position = vec4(aPosition, 0.0, 1.0);
 }`;
-
   const frag=`
 precision highp float;
 varying vec2 vUv;
@@ -637,56 +627,43 @@ void main(){
   col.a = 1.0;
   gl_FragColor = col;
 }`;
-
-  function compile(type,src){
-    const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
-    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
-    return s;
-  }
-  const prog=gl.createProgram();
-  gl.attachShader(prog,compile(gl.VERTEX_SHADER,vert));
-  gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,frag));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  const buf=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 3,-1, -1,3]),gl.STATIC_DRAW);
-  const loc=gl.getAttribLocation(prog,'aPosition');
-  gl.enableVertexAttribArray(loc);
-  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
-
-  const U={};
-  ['uTime','uColor','uSpeed','uScale','uRotation','uNoiseIntensity'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
-  const rgb=hexRGB(props.color);
-  gl.uniform3f(U.uColor,rgb[0],rgb[1],rgb[2]);
-  gl.uniform1f(U.uSpeed,props.speed);
-  gl.uniform1f(U.uScale,props.scale);
-  gl.uniform1f(U.uRotation,props.rotation);
-  gl.uniform1f(U.uNoiseIntensity,props.noiseIntensity);
-
-  function resize(){
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    const w=canvas.clientWidth||1, h=canvas.clientHeight||1;
-    const cw=Math.round(w*dpr), ch=Math.round(h*dpr);
-    if(canvas.width!==cw||canvas.height!==ch){ canvas.width=cw; canvas.height=ch; gl.viewport(0,0,cw,ch); }
-  }
-
-  let t=0, last=performance.now();
-  function frame(now){
-    const delta=(now-last)/1000; last=now;
-    resize();
-    t += 0.1 * delta;              // matches useFrame: uTime += 0.1 * delta
-    gl.uniform1f(U.uTime,t);
-    gl.drawArrays(gl.TRIANGLES,0,3);
+  function initSilk(canvas){
+    const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+    if(!gl){ canvas.style.background='#15140f'; return; }
+    const d=canvas.dataset;
+    const props={ speed:parseFloat(d.speed||'5'), scale:parseFloat(d.scale||'1'),
+      color:d.color||'#7B7481', noise:parseFloat(d.noise||'1.5'), rotation:parseFloat(d.rotation||'0') };
+    function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+      if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(s));return s;}
+    const prog=gl.createProgram();
+    gl.attachShader(prog,compile(gl.VERTEX_SHADER,vert));
+    gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,frag));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+    const loc=gl.getAttribLocation(prog,'aPosition');
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+    const U={}; ['uTime','uColor','uSpeed','uScale','uRotation','uNoiseIntensity'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
+    const rgb=hexRGB(props.color);
+    gl.uniform3f(U.uColor,rgb[0],rgb[1],rgb[2]);
+    gl.uniform1f(U.uSpeed,props.speed);
+    gl.uniform1f(U.uScale,props.scale);
+    gl.uniform1f(U.uRotation,props.rotation);
+    gl.uniform1f(U.uNoiseIntensity,props.noise);
+    function resize(){
+      const dpr=Math.min(window.devicePixelRatio||1,2);
+      const w=canvas.clientWidth||1,h=canvas.clientHeight||1;
+      const cw=Math.round(w*dpr),ch=Math.round(h*dpr);
+      if(canvas.width!==cw||canvas.height!==ch){canvas.width=cw;canvas.height=ch;gl.viewport(0,0,cw,ch);}
+    }
+    let t=0,last=performance.now();
+    function frame(now){const delta=(now-last)/1000;last=now;resize();t+=0.1*delta;
+      gl.uniform1f(U.uTime,t);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(frame);}
+    resize(); gl.uniform1f(U.uTime,t); gl.drawArrays(gl.TRIANGLES,0,3);
+    window.addEventListener('resize',resize);
     requestAnimationFrame(frame);
   }
-  // paint the first frame immediately (rAF is paused on hidden/backgrounded tabs)
-  resize();
-  gl.uniform1f(U.uTime, t);
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(frame);
+  document.querySelectorAll('.silk-fx').forEach(initSilk);
 })();
 </script>
 
@@ -713,7 +690,7 @@ void main(){
     dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
     if(!shown){shown=true;dot.style.opacity=1;ring.style.opacity=1;}
   },{passive:true});
-  (function loop(){ rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18;
+  (function loop(){ rx+=(mx-rx)*0.4; ry+=(my-ry)*0.4;
     ring.style.transform='translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
     requestAnimationFrame(loop); })();
   const sel='a,button,.work-card,.hero-play,.nav-toggle,.about-btn,.cta-btn,.btn-talk,.hero-social a,.footer-social a';
