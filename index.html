@@ -35,6 +35,7 @@ body{
 }
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
+.grain{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0.05;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px}
 .eyebrow{
   font-family:var(--font-head);
   font-size:11px;font-weight:600;
@@ -155,9 +156,9 @@ section{position:relative}
 .sec-link:hover{color:var(--gold)}
 
 /* ---------- FEATURED WORK ---------- */
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.work-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:960px}
 .work-card{
-  position:relative;aspect-ratio:4/5;overflow:hidden;cursor:pointer;
+  position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;
   border:1px solid var(--line-soft);background:#151513;
 }
 .work-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;filter:brightness(.8)}
@@ -175,7 +176,7 @@ section{position:relative}
 
 /* ---------- SERVICES ---------- */
 .services{border-top:1px solid var(--line-soft);background:var(--bg-2)}
-.serv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:16px}
+.serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:16px}
 .serv-item{padding-top:26px;border-top:1px solid var(--line)}
 .serv-icon{width:40px;height:40px;margin-bottom:26px;color:var(--gold)}
 .serv-icon svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.4}
@@ -248,7 +249,6 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
   .about-stats{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap}
   .stat{flex:1 1 40%}
   .serv-grid{grid-template-columns:1fr 1fr;gap:34px}
-  .work-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:860px){
   .container,.nav-inner,.hero-content{padding-left:24px;padding-right:24px}
@@ -273,6 +273,8 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
 </style>
 </head>
 <body>
+
+<div class="grain" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -304,10 +306,10 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
     </div>
   </div>
   <div class="hero-social">
-    <a href="#" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/luca.spier/" target="_blank">Instagram</a>
     <a href="https://www.youtube.com/@travelwithluca18" target="_blank">YouTube</a>
     <a href="https://www.tiktok.com/@lucaspiervisuals" target="_blank">TikTok</a>
-    <a href="#" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/luca-s-574579182/" target="_blank">LinkedIn</a>
   </div>
   <div class="hero-scroll">Scroll</div>
 </header>
@@ -324,7 +326,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
     </div>
     <div class="work-grid">
       <div class="work-card" onclick="openModal('QRbUp317eOM','Cinematic Travel Film','New York','Cinematic Travel Vlog')">
-        <img src="https://img.youtube.com/vi/QRbUp317eOM/hqdefault.jpg" alt="New York" loading="lazy">
+        <img src="https://img.youtube.com/vi/QRbUp317eOM/maxresdefault.jpg" alt="New York" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/QRbUp317eOM/hqdefault.jpg'">
         <div class="work-body">
           <div class="work-tag">Travel Film</div>
           <div class="work-title">New York</div>
@@ -335,7 +337,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
         </div>
       </div>
       <div class="work-card" onclick="openModal('zfHQd28FxwA','Testimonial Video','Employee Stories','HR-Testimonial · Bahmann Coaching')">
-        <img src="https://img.youtube.com/vi/zfHQd28FxwA/hqdefault.jpg" alt="Employee Stories" loading="lazy">
+        <img src="https://img.youtube.com/vi/zfHQd28FxwA/maxresdefault.jpg" alt="Employee Stories" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/zfHQd28FxwA/hqdefault.jpg'">
         <div class="work-body">
           <div class="work-tag">Testimonial Video</div>
           <div class="work-title">Employee Stories</div>
@@ -346,7 +348,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
         </div>
       </div>
       <div class="work-card" onclick="openModal('2KoWfWtbmtk','Music Video','Benio81','Music Video · Benio81')">
-        <img src="https://img.youtube.com/vi/2KoWfWtbmtk/hqdefault.jpg" alt="Benio81" loading="lazy">
+        <img src="https://img.youtube.com/vi/2KoWfWtbmtk/maxresdefault.jpg" alt="Benio81" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/2KoWfWtbmtk/hqdefault.jpg'">
         <div class="work-body">
           <div class="work-tag">Music Video</div>
           <div class="work-title">Benio81</div>
@@ -371,9 +373,9 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
     </div>
     <div class="serv-grid">
       <div class="serv-item">
-        <div class="serv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg></div>
-        <h3>HR Testimonials</h3>
-        <p>Authentic employee stories that build trust and win over talent.</p>
+        <div class="serv-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></div>
+        <h3>Music Videos</h3>
+        <p>Cinematic music videos with a distinct visual language &mdash; bringing the sound to life and putting the artist center stage.</p>
       </div>
       <div class="serv-item">
         <div class="serv-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M9 8V5h6v3M9 13h6"/></svg></div>
@@ -384,11 +386,6 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
         <div class="serv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"/></svg></div>
         <h3>Social Media Content</h3>
         <p>Short-form content that stands out on social media and reaches the right audience.</p>
-      </div>
-      <div class="serv-item">
-        <div class="serv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div>
-        <h3>Recruiting Campaigns</h3>
-        <p>Videos that support your recruiting campaigns and speak to the right people.</p>
       </div>
     </div>
   </div>
@@ -443,7 +440,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
       <a href="#">Terms</a>
     </div>
     <div class="footer-social">
-      <a href="#" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 100 9.8 4.9 4.9 0 000-9.8zm0 8.1a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg></a>
+      <a href="https://www.instagram.com/luca.spier/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a4.9 4.9 0 100 9.8 4.9 4.9 0 000-9.8zm0 8.1a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg></a>
       <a href="https://www.youtube.com/@travelwithluca18" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5c-.2-1-.9-1.8-1.9-2C19.3 5 12 5 12 5s-7.3 0-9.1.5C1.9 5.7 1.2 6.5 1 7.5.5 9.3.5 12 .5 12s0 2.7.5 4.5c.2 1 .9 1.8 1.9 2C4.7 19 12 19 12 19s7.3 0 9.1-.5c1-.2 1.7-1 1.9-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.7 15.3V8.7l6 3.3-6 3.3z"/></svg></a>
       <a href="https://www.tiktok.com/@lucaspiervisuals" target="_blank" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.8c-.9-.6-1.5-1.5-1.7-2.6-.1-.4-.1-.8-.1-1.2h-3v13.1c0 1.5-1.2 2.7-2.7 2.7-.9 0-1.7-.4-2.2-1.1-.4-.5-.5-1.1-.5-1.7 0-1.5 1.2-2.7 2.7-2.7.3 0 .6 0 .8.1v-3c-.3 0-.6-.1-.9-.1-3.1 0-5.6 2.5-5.6 5.6 0 1.9.9 3.6 2.4 4.6.9.6 2 1 3.2 1 3.1 0 5.6-2.5 5.6-5.6V9.3c1.2.9 2.7 1.4 4.3 1.4v-3c-.9 0-1.7-.2-2.4-.6-.2-.1-.4-.2-.5-.3z"/></svg></a>
     </div>
