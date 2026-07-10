@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.classList.add('anim','imgfx');</script>
+<meta name="description" content="LucaSpierVisuals — Luca Spier, videographer & storyteller based in Hannover. Cinematic music videos, brand films and social content that move people.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2222%22%20fill%3D%22%230a0a0a%22/%3E%3Ctext%20x%3D%2250%22%20y%3D%2250%22%20dy%3D%220.34em%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%20Black%2CArial%2Csans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2233%22%20fill%3D%22%23c9a86a%22%3ELSV%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2222%22%20fill%3D%22%230a0a0a%22/%3E%3Ctext%20x%3D%2250%22%20y%3D%2250%22%20dy%3D%220.34em%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%20Black%2CArial%2Csans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2233%22%20fill%3D%22%23c9a86a%22%3ELSV%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lucaspiervisuals.github.io/">
+<meta property="og:title" content="LucaSpierVisuals — Videographer & Storyteller">
+<meta property="og:description" content="Cinematic music videos, brand films and social content that move people.">
+<meta property="og:image" content="https://img.youtube.com/vi/mlENlC72yOc/maxresdefault.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LucaSpierVisuals — Videographer & Storyteller">
+<meta name="twitter:description" content="Cinematic music videos, brand films and social content that move people.">
+<meta name="twitter:image" content="https://img.youtube.com/vi/mlENlC72yOc/maxresdefault.jpg">
 <title>LucaSpierVisuals — Videographer & Storyteller</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +79,7 @@ nav.scrolled{
 .logo{font-family:var(--font-display);font-size:22px;letter-spacing:0.04em;color:var(--fg)}
 .logo span{color:var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
+.nav-links li.mobile-only{display:none}
 .nav-links a{
   position:relative;
   font-family:var(--font-head);
@@ -170,11 +186,8 @@ section{position:relative}
 .work-card{
   position:relative;aspect-ratio:16/9;overflow:hidden;isolation:isolate;cursor:pointer;
   border-radius:20px;background:#141412;
-  border:1px solid rgba(255,255,255,0.08);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.20),
-    inset 0 0 0 1px rgba(255,255,255,0.04),
-    inset 0 -24px 46px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.12),
     0 26px 54px -16px rgba(0,0,0,0.62);
   transition:transform .5s cubic-bezier(.22,.61,.36,1),box-shadow .5s ease;
 }
@@ -185,9 +198,7 @@ section{position:relative}
 .work-card:hover{
   transform:translateY(-5px);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.34),
-    inset 0 0 0 1px rgba(255,255,255,0.07),
-    inset 0 -24px 46px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.2),
     0 40px 80px -18px rgba(0,0,0,0.72);
 }
 .work-card img{width:100%;height:100%;object-fit:cover;border-radius:inherit;transition:transform .6s ease,opacity .8s ease,filter .8s ease;filter:brightness(.8)}
@@ -224,11 +235,8 @@ section{position:relative}
 .about-photo{
   position:relative;aspect-ratio:3/4;overflow:hidden;isolation:isolate;
   border-radius:20px;background:#141412;
-  border:1px solid rgba(255,255,255,0.08);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.20),
-    inset 0 0 0 1px rgba(255,255,255,0.04),
-    inset 0 -24px 46px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.12),
     0 26px 54px -16px rgba(0,0,0,0.62);
 }
 .about-photo::before{
@@ -309,6 +317,7 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
   #nav.nav-open .nav-links{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(10,10,10,0.98);-webkit-backdrop-filter:saturate(160%) blur(18px);backdrop-filter:saturate(160%) blur(18px);border-bottom:1px solid var(--line-soft);padding:6px 24px 22px}
   #nav.nav-open .nav-links li{list-style:none}
   #nav.nav-open .nav-links a{display:block;padding:17px 2px;font-size:14px;letter-spacing:0.14em;color:var(--fg);border-top:1px solid var(--line-soft)}
+  #nav.nav-open .nav-links li.mobile-only{display:block}
   .nav-toggle{display:block}
   .hero{grid-template-columns:1fr;min-height:auto;padding:130px 0 90px}
   .hero-media{position:relative;width:100%;height:44vh;order:-1;margin-bottom:44px}
@@ -344,16 +353,32 @@ footer{border-top:1px solid var(--line-soft);background:var(--bg)}
   .cursor-ring.hover{width:64px;height:64px;border-color:var(--gold);background-color:rgba(201,168,106,0.09)}
 }
 /* hero intro */
-html.anim .hero-inner .eyebrow, html.anim .hero-title, html.anim .hero-sub{opacity:0;transform:translateY(26px);transition:opacity .95s cubic-bezier(.22,.61,.36,1),transform .95s cubic-bezier(.22,.61,.36,1)}
-html.anim.loaded .hero-inner .eyebrow{opacity:1;transform:none;transition-delay:.15s}
+html.anim .hero-inner .status-pill, html.anim .hero-inner .eyebrow, html.anim .hero-title, html.anim .hero-sub{opacity:0;transform:translateY(26px);transition:opacity .95s cubic-bezier(.22,.61,.36,1),transform .95s cubic-bezier(.22,.61,.36,1)}
+html.anim.loaded .hero-inner .status-pill{opacity:1;transform:none;transition-delay:.06s}
+html.anim.loaded .hero-inner .eyebrow{opacity:1;transform:none;transition-delay:.18s}
 html.anim.loaded .hero-title{opacity:1;transform:none;transition-delay:.30s}
 html.anim.loaded .hero-sub{opacity:1;transform:none;transition-delay:.50s}
 @media (prefers-reduced-motion:reduce){html.anim .hero-inner .eyebrow,html.anim .hero-title,html.anim .hero-sub{opacity:1 !important;transform:none !important;transition:none}}
+/* scroll progress + smooth anchors */
+html{scroll-behavior:smooth}
+#top,#work,#services,#about,#contact{scroll-margin-top:76px}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--gold);z-index:200;pointer-events:none;box-shadow:0 0 12px rgba(201,168,106,0.5)}
+.to-top{position:fixed;right:24px;bottom:24px;width:46px;height:46px;border-radius:50%;background:rgba(18,18,17,0.7);border:1px solid var(--line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;color:var(--fg);cursor:pointer;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s,background .2s,color .2s,border-color .2s;z-index:150}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+.to-top svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+/* availability pill */
+.status-pill{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-head);font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:8px 15px;margin-bottom:26px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#5fd07a;box-shadow:0 0 0 0 rgba(95,208,122,0.55);animation:statuspulse 2.4s ease-out infinite}
+@keyframes statuspulse{0%{box-shadow:0 0 0 0 rgba(95,208,122,0.5)}70%{box-shadow:0 0 0 9px rgba(95,208,122,0)}100%{box-shadow:0 0 0 0 rgba(95,208,122,0)}}
+@media (prefers-reduced-motion:reduce){.status-dot{animation:none}}
 </style>
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
+<div class="scroll-progress"></div>
+<button class="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg></button>
 
 <!-- NAV -->
 <nav id="nav">
@@ -363,7 +388,7 @@ html.anim.loaded .hero-sub{opacity:1;transform:none;transition-delay:.50s}
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li class="mobile-only"><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="btn-talk">Let's Talk</a>
     <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu" aria-expanded="false">
@@ -379,6 +404,7 @@ html.anim.loaded .hero-sub{opacity:1;transform:none;transition-delay:.50s}
   </div>
   <div class="hero-content">
     <div class="hero-inner">
+      <div class="status-pill"><span class="status-dot"></span>Available for projects</div>
       <span class="eyebrow">LucaSpierVisuals</span>
       <h1 class="hero-title">Stories that move people.</h1>
       <p class="hero-sub">From music videos to commercial film &ndash; I tell stories through image and motion.</p>
@@ -748,6 +774,23 @@ void main(){
     if(img.complete && img.naturalWidth>0) mark();
     else { img.addEventListener('load',mark); img.addEventListener('error',mark); }
   });
+})();
+</script>
+<script>
+(function(){
+  var bar=document.querySelector('.scroll-progress');
+  var top=document.querySelector('.to-top');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=(h.scrollHeight - h.clientHeight)||1;
+    var p=Math.min(Math.max(window.scrollY/max,0),1);
+    if(bar) bar.style.transform='scaleX('+p+')';
+    if(top) top.classList.toggle('show', window.scrollY>600);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+  if(top) top.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 })();
 </script>
 </body>
